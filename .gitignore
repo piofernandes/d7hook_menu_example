@@ -1,0 +1,5 @@
+/*
+!/modules/custom
+/themes/*
+!/themes/berlin
+!.gitignore

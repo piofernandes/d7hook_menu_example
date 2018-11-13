@@ -1,0 +1,42 @@
+<?php
+
+/**
+ * Implements hook_menu().
+ */
+function berlin_widget_menu(){
+  $items['berlin-widget/%'] = array(
+    'title' => 'Berlin widget page customizer',
+    'description' => 'Adds more blocks to the page.',
+    'page callback' => '_berlin_widget_block_customizer',
+    'page arguments' => array(1),
+    'access callback' => TRUE,
+  );
+  return $items;
+}
+
+function _berlin_widget_block_customizer($arg1 = NULL) {
+  switch($arg1){
+    case 'add_block_titles':
+      _berlin_widget_add_number('titles');
+      break;
+    case 'add_block_numbers':
+      _berlin_widget_add_number('numbers');
+      break;
+    case 'add_block_images':
+      _berlin_widget_add_number('images');
+      break;
+  }
+  $params = drupal_get_query_parameters();
+  if (isset($params['dest'])) {
+    drupal_goto($params['dest']);
+  }
+}
+
+function _berlin_widget_add_number($type) {
+  if(isset($_SESSION['berlin'][$type])){
+    $_SESSION['berlin'][$type]++;
+  }
+  else{
+    $_SESSION['berlin'][$type] = 1;
+  }
+}
